@@ -10,6 +10,10 @@ A complete Redis High Availability (HA) performance testing environment with Mas
 
 ### 1. Start Infrastructure
 ```bash
+# Using Docker Compose directly
+docker compose up -d
+
+# Or using the start script
 ./start.sh
 ```
 This starts all services: Redis Master, 2 Replicas, 3 Sentinels, Prometheus, Grafana, and memtier_benchmark.
@@ -20,7 +24,6 @@ This starts all services: Redis Master, 2 Replicas, 3 Sentinels, Prometheus, Gra
 ./test-memtier.sh baseline
 ./test-memtier.sh read-heavy
 ./test-memtier.sh write-heavy
-./test-memtier.sh mixed
 
 # Or run all test scenarios
 ./test-memtier.sh all
@@ -36,14 +39,19 @@ This starts all services: Redis Master, 2 Replicas, 3 Sentinels, Prometheus, Gra
 docker compose down
 ```
 
+### 5. Validate Setup (Optional)
+```bash
+./test-docker-compose.sh
+```
+This validates that all services are running correctly and accessible.
+
 ## 📊 Test Scenarios
 
 | Scenario      | Description                 | Read/Write Ratio | Operations/sec |
 | ------------- | --------------------------- | ---------------- | -------------- |
-| `baseline`    | Balanced GET/SET operations | 1:1 (50% / 50%)  | ~100K+         |
-| `read-heavy`  | Read-intensive workload     | 4:1 (80% / 20%)  | ~140K+         |
+| `baseline`    | Balanced GET/SET operations | 1:1 (50% / 50%)  | ~150K+         |
+| `read-heavy`  | Read-intensive workload     | 4:1 (80% / 20%)  | ~145K+         |
 | `write-heavy` | Write-intensive workload    | 1:4 (20% / 80%)  | ~100K+         |
-| `mixed`       | Balanced workload           | 1:1 (50% / 50%)  | ~100K+         |
 
 ## 🏗️ Architecture
 
